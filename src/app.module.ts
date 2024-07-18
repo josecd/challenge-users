@@ -1,20 +1,22 @@
+import { SchedulerModule } from './presentation/modules/scheduler.module';
+import { UserModule } from './presentation/modules/user.module';
 import { Module } from '@nestjs/common';
-import { UserController } from './presentation/controllers/user.controller';
 import { ConfigModule } from '@nestjs/config';
 import { configurationEnv } from './configuration';
-import { FirebaseConfigService } from './infrastructure/config/firebase.config';
-import { UserService } from './application/services/user.service';
-import { FirebaseService } from './infrastructure/services/firebase.service';
 
 @Module({
   imports: [
+        SchedulerModule, 
+    UserModule,
     ConfigModule.forRoot({
-      isGlobal:true,
-      load:[configurationEnv],
+      isGlobal: true,
+      load: [configurationEnv],
     }),
+    UserModule,
+    SchedulerModule
   ],
-  controllers: [UserController],
-  providers: [UserService,FirebaseConfigService,FirebaseService],
-  exports: [FirebaseConfigService]
+  controllers: [],
+  providers: [
+  ],
 })
-export class AppModule {}
+export class AppModule { }
