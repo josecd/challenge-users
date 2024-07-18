@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from 'src/domain/entities/user.entity';
 import { generateSecurePassword } from '../../application/utils/user.utils';
 import { FirebaseConfigService } from '../config/firebase.config';
+import * as admin from 'firebase-admin';
 
 @Injectable()
 /**
@@ -25,9 +26,9 @@ export class FirebaseService {
      * @returns A promise that resolves to the created user record.
      * @throws If there is an error creating the user.
      */
-    async authCreateUser(user: User) {
+    async authCreateUser(user: User): Promise<admin.auth.UserRecord> {
         try {
-            const userRecord = await this.firebaseConfigService.getAuth().createUser(user);
+            const userRecord = await this.firebaseConfigService.getDataAuth().createUser(user);
             return userRecord;
         } catch (error) {
             throw new Error(`Error creating user: ${error.message}`);
@@ -41,9 +42,9 @@ export class FirebaseService {
      * @returns A Promise that resolves to the updated user record.
      * @throws If there is an error updating the user.
      */
-    async authUpdateUser(user: User) {
+    async authUpdateUser(user: User): Promise<admin.auth.UserRecord> {
         try {
-            const userRecord = await this.firebaseConfigService.getAuth().updateUser(user.id ,user);
+            const userRecord = await this.firebaseConfigService.getDataAuth().updateUser(user.id ,user);
             return userRecord;
         } catch (error) {
             throw new Error(`Error updating user: ${error.message}`);
@@ -58,7 +59,7 @@ export class FirebaseService {
      */
     async authDeleteUser(uid: string) {
         try {
-            await this.firebaseConfigService.getAuth().deleteUser(uid);
+            await this.firebaseConfigService.getDataAuth().deleteUser(uid);
         } catch (error) {
             throw new Error(`Error deleting user: ${error.message}`);
         }

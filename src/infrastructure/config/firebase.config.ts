@@ -25,10 +25,10 @@ export class FirebaseConfigService implements OnModuleInit {
             if (process.env.FUNCTIONS_EMULATOR == "true") {
                 console.log("Using Firestore emulator");
                 this.firestore.settings({
-                    host: '127.0.0.1:3002',
+                    host: '127.0.0.1:30024',
                     ssl: false,
                 });
-                process.env.FIREBASE_AUTH_EMULATOR_HOST = '127.0.0.1:3001';
+                process.env.FIREBASE_AUTH_EMULATOR_HOST = '127.0.0.1:30014';
             }
         }
     }
@@ -47,7 +47,7 @@ export class FirebaseConfigService implements OnModuleInit {
      * @throws If the Firebase app is not initialized.
      * @throws If the Auth instance is not initialized.
         */
-    getAuth() {
+    getDataAuth(): admin.auth.Auth {
         return this.auth;
     }
 
