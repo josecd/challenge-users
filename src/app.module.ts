@@ -1,3 +1,4 @@
+import { PubsubModule } from './presentation/modules/pubsub.module';
 import { SchedulerModule } from './presentation/modules/scheduler.module';
 import { UserModule } from './presentation/modules/user.module';
 import { Module } from '@nestjs/common';
@@ -6,14 +7,14 @@ import { configurationEnv } from './configuration';
 
 @Module({
   imports: [
-        SchedulerModule, 
     UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configurationEnv],
     }),
     UserModule,
-    SchedulerModule
+    SchedulerModule,
+    PubsubModule, 
   ],
   controllers: [],
   providers: [
